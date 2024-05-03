@@ -1,0 +1,5 @@
+{
+  "compilerOptions": {},
+  "include": ["server"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

@@ -1,0 +1,313 @@
+openapi: 3.0.3
+info:
+  title: Monite FE Interview - Case Study
+  description: |-
+    This are sample APIs for retrieving and modifying products and units
+  version: 1.0.0
+
+servers:
+  - url: /v1
+
+tags:
+  - name: Product
+    description: Product info and pricing
+  - name: Unit
+    description: Magnitude of a unit of quantity of a product
+  - name: User
+    description: User and profile info
+
+paths:
+  /product:
+    get:
+      tags:
+        - Product
+      summary: Get the list of all products
+      description: List of all products
+      x-eov-operation-id: product#list
+      x-eov-operation-handler: routes/product
+      parameters:
+        - $ref: '#/components/parameters/StartIndex'
+        - $ref: '#/components/parameters/PageLength'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginationResponse'
+                  - type: object
+                    properties:
+                      records:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Product'
+        '401':
+          description: User not logged in
+        '422':
+          description: Validation exception
+    post:
+      tags:
+        - Product
+      summary: Add a new product to the store
+      description: Add a new product to the store
+      x-eov-operation-id: product#add
+      x-eov-operation-handler: routes/product
+      requestBody:
+        description: Create a new product in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Invalid input
+        '401':
+          description: User not logged in
+        '422':
+          description: Validation exception
+  /product/{productId}:
+    get:
+      tags:
+        - Product
+      summary: Find product by ID
+      description: Returns a single product
+      x-eov-operation-id: product#findById
+      x-eov-operation-handler: routes/product
+      parameters:
+        - $ref: '#/components/parameters/ProductId'
+
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Invalid ID supplied
+        '401':
+          description: User not logged in
+        '404':
+          description: Product not found
+    put:
+      tags:
+        - Product
+      summary: Updates a product in the store
+      description: ''
+      x-eov-operation-id: product#update
+      x-eov-operation-handler: routes/product
+      parameters:
+        - $ref: '#/components/parameters/ProductId'
+      requestBody:
+        description: Update an existent product in the store
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '400':
+          description: Invalid input
+        '401':
+          description: User not logged in
+        '404':
+          description: Product not found
+    delete:
+      tags:
+        - Product
+      summary: Deletes a product
+      description: delete a product
+      x-eov-operation-id: product#delete
+      x-eov-operation-handler: routes/product
+      parameters:
+        - $ref: '#/components/parameters/ProductId'
+      responses:
+        '400':
+          description: Invalid product value
+        '401':
+          description: User not logged in
+        '404':
+          description: Product not found
+  /unit:
+    get:
+      tags:
+        - Unit
+      summary: Get the list of all units
+      description: List of all units
+      x-eov-operation-id: unit#list
+      x-eov-operation-handler: routes/unit
+      parameters:
+        - $ref: '#/components/parameters/StartIndex'
+        - $ref: '#/components/parameters/PageLength'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginationResponse'
+                  - type: object
+                    properties:
+                      records:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Unit'
+        '401':
+          description: User not logged in
+        '422':
+          description: Validation exception
+    post:
+      tags:
+        - Unit
+      summary: Add a new unit to the store
+      description: Add a new unit to the store
+      x-eov-operation-id: unit#add
+      x-eov-operation-handler: routes/unit
+      requestBody:
+        description: Create a new unit in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Unit'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unit'
+        '400':
+          description: Invalid input
+        '401':
+          description: User not logged in
+        '409':
+          description: Unit already present
+        '422':
+          description: Validation exception
+  /user/me:
+    get:
+      tags:
+        - user
+      summary: Get current logged in user
+      description: ''
+      x-eov-operation-id: user#me
+      x-eov-operation-handler: routes/user
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: User not logged in
+
+components:
+  parameters:
+    PageLength:
+      name: pageLength
+      in: query
+      description: Number of records to return
+      schema:
+        type: number
+    StartIndex:
+      name: startIndex
+      in: query
+      description: Start index for paging
+      schema:
+        type: number
+    ProductId:
+      in: path
+      name: productId
+      required: true
+      schema:
+        $ref: '#/components/schemas/Id'
+
+  schemas:
+    Id:
+      type: string
+      format: uuid.v4
+      example: '1a98433a-53d6-4c73-bff5-44ca866af09c'
+    Uid:
+      allOf:
+        - $ref: '#/components/schemas/Id'
+      readOnly: true
+    Product:
+      required:
+        - name
+        - type
+        - unit
+        - price
+        - vat
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Uid'
+        name:
+          type: string
+          example: Design services
+        type:
+          $ref: '#/components/schemas/ProductType'
+        unit:
+          $ref: '#/components/schemas/Id'
+        price:
+          type: integer
+          format: int64
+          description: price in cents (12340 = 123.40)
+          example: 12340
+        vat:
+          type: integer
+          format: int64
+          description: VAT in per mille (2100 = 21.00%)
+          example: 2100
+    ProductType:
+      type: string
+      enum:
+        - product
+        - service
+    Unit:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Uid'
+        name:
+          type: string
+          example: Kilos
+    User:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Uid'
+        username:
+          type: string
+          example: theUser
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: James
+        email:
+          type: string
+          example: john@email.com
+    PaginationResponse:
+      type: object
+      properties:
+        totalRecords:
+          type: number
+        displayRecords:
+          type: number
