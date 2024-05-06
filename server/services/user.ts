@@ -10,6 +10,7 @@ export const db: User[] = [
     firstName: 'John',
     lastName: 'James',
     email: 'john@email.com',
+    profile: 'https://xsgames.co/randomusers/avatar.php?g=pixel',
   },
 ]
 

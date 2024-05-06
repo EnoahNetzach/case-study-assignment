@@ -1,0 +1,22 @@
+.grid_container {
+  --grid_areas: none;
+  --grid_columns: 1fr;
+  --grid_rows: 1fr;
+  --grid_gap_col: var(--space_0);
+  --grid_gap_row: var(--space_0);
+
+  display: grid;
+  grid-template-areas: var(--grid_areas);
+  grid-template-columns: var(--grid_columns);
+  grid-template-rows: var(--grid_rows);
+  grid-gap: var(--space_0);
+  column-gap: var(--grid_gap_col);
+  row-gap: var(--grid_gap_row);
+  padding: var(--space_0);
+}
+
+.grid_element {
+  --grid_area: none;
+
+  grid-area: var(--grid_area);
+}

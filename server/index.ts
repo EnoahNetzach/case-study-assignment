@@ -5,12 +5,14 @@ import * as path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import getPort from 'get-port'
 import { paginationMiddleware } from './services/pagination'
+import cors from 'cors'
 
 const app = express()
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+app.use(cors())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.text())
 app.use(express.json())

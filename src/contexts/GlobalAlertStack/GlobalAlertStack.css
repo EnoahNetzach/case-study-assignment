@@ -1,0 +1,11 @@
+.global-alert-stack_container {
+  bottom: 0;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space_100);
+  left: 0;
+  padding-bottom: var(--space_100);
+  padding-left: var(--space_100);
+  position: absolute;
+  z-index: 10;
+}

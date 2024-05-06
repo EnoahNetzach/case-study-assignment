@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Monite FE Interview - Case Study
+  title: FE Interview - Case Study
   description: |-
     This are sample APIs for retrieving and modifying products and units
   version: 1.0.0
@@ -109,10 +109,16 @@ paths:
       requestBody:
         description: Update an existent product in the store
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '#/components/schemas/ProductMutableType'
       responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
         '400':
           description: Invalid input
         '401':
@@ -176,7 +182,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Unit'
+              $ref: '#/components/schemas/UnitMutableType'
         required: true
       responses:
         '200':
@@ -244,7 +250,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/Id'
       readOnly: true
-    Product:
+    ProductMutableType:
       required:
         - name
         - type
@@ -253,11 +259,11 @@ components:
         - vat
       type: object
       properties:
-        id:
-          $ref: '#/components/schemas/Uid'
         name:
           type: string
           example: Design services
+        description:
+          type: string
         type:
           $ref: '#/components/schemas/ProductType'
         unit:
@@ -272,23 +278,45 @@ components:
           format: int64
           description: VAT in per mille (2100 = 21.00%)
           example: 2100
+    Product:
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              $ref: '#/components/schemas/Uid'
+        - $ref: '#/components/schemas/ProductMutableType'
     ProductType:
       type: string
       enum:
         - product
         - service
-    Unit:
+    UnitMutableType:
       required:
         - name
       type: object
       properties:
-        id:
-          $ref: '#/components/schemas/Uid'
         name:
           type: string
           example: Kilos
+    Unit:
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              $ref: '#/components/schemas/Uid'
+        - $ref: '#/components/schemas/UnitMutableType'
     User:
       type: object
+      required:
+        - id
+        - username
+        - firstName
+        - lastName
+        - email
       properties:
         id:
           $ref: '#/components/schemas/Uid'
@@ -304,6 +332,9 @@ components:
         email:
           type: string
           example: john@email.com
+        profile:
+          type: string
+          example: https://xsgames.co/randomusers/avatar.php?g=pixel
     PaginationResponse:
       type: object
       properties:

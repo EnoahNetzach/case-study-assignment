@@ -1,0 +1,7 @@
+.avatar {
+  --size: var(--space_100);
+
+  border-radius: 50%;
+  height: var(--size);
+  width: var(--size);
+}

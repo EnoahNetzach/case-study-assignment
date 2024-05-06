@@ -1,0 +1,7 @@
+.button {
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: var(--space_50) var(--space_100);
+  vertical-align: var(--space_50);
+}

@@ -15,8 +15,7 @@ export default {
   'product#add': (async (req, res) => {
     res.json(await addProduct(req.body))
   }) satisfies OpenapiHandler<Paths['/product']['post']>,
-  'product#findById': ((req, res) => {
-    console.log(req.params.productId)
+  'product#findById': ((_req, res) => {
     res.json({
       id: '1',
       name: 'Product 1',

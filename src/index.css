@@ -1,11 +1,50 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --base-font-size: 16px;
+
+  /* Spacing variables */
+  --space_0: 0px;
+  --space_none: var(--space_0);
+  --space_50: 0.5rem;
+  --space_100: 1rem;
+  --space_150: 1.5rem;
+  --space_200: 2rem;
+  --space_300: 3rem;
+  --space_400: 4rem;
+  --space_500: 5rem;
+  --space_600: 6rem;
+  --space_700: 7rem;
+  --space_800: 8rem;
+  --space_1000: 10rem;
+  --space_1200: 12rem;
+  --space_1500: 15rem;
+  --space_2000: 20rem;
+  --space_5000: 50rem;
+
+  /* Color variables */
+  --color_text_default: #202d4c;
+  --color_text_subtle: #848c9d;
+  --color_text_neutral: #b7bbc5;
+  --color_text_inverse: #f7faff;
+  --color_text_accent: #286df3;
+  --color_background_default: #ffffff;
+  --color_background_subtle: #f6f7f8;
+  --color_background_subtle-floating: #a7abb780;
+  --color_background_accent: #e9f0fe;
+  --color_background_accent-floating: #286df3;
+  --color_background_success-floating: #2dca8c;
+  --color_background_error-floating: #ffcaca;
+  --color_border_default: #061537;
+  --color_border_subtle: #e8e9ec;
+  --color_border_neutral: #a5aab5;
+
+  /* Global styles */
+  color-scheme: light dark;
+  background-color: var(--color_background_default);
+  color: var(--color_text_default);
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,56 +52,76 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
+html {
+  font-size: var(--base-font-size);
+}
+
+/* Typography */
+
+.text-style_headings_titles_bold_huge {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 42px;
+  letter-spacing: 0.1px;
+}
+
+.text-style_text_labels_tall_bold {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: 0;
+}
+
+.text-style_text_paragraphs_body_medium {
+  font-size: 16px;
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  line-height: 21px;
+  letter-spacing: 0;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+.text-style_text_labels_grande_bold {
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 22px;
+  letter-spacing: 0.3px;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+.text-style_text_labels_grande_medium {
+  font-size: 21px;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+  line-height: 22px;
+  letter-spacing: 0.3px;
 }
-button:hover {
-  border-color: #646cff;
+
+.text-style_text_labels_default_bold {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 0;
 }
+
+.text-style_text_paragraphs_tall_regular {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 23px;
+  letter-spacing: 0;
+}
+
+.text-style_text_paragraphs_body_regular {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0;
+}
+
+input:focus,
 button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+textarea:focus,
+select:focus {
+  outline: max(2px, 0.2em) solid var(--color_background_accent);
+  outline-offset: 0.25em;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.form-field + .form-field {
+  margin-top: var(--space_200);
 }
